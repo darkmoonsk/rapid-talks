@@ -1,10 +1,10 @@
 import React from "react";
-import Form from "@/components/Form";
+import AuthForm from "@/components/AuthForm";
 
 function LoginPage() {
   return (
     <div>
-      <Form type="login" />
+      <AuthForm type="login" />
     </div>
   );
 }
