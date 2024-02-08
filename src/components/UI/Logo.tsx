@@ -10,7 +10,7 @@ function Logo() {
         width="120"
         height="120"
       />
-      <h3 className="logo-title">
+      <h3 className="text-h3-bold text-blue-950">
         RapidTalks
       </h3>
     </div>
