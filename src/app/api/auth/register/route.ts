@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDB } from "@/database";
 import bcrypt  from "bcrypt";
 import User from "@/models/User";
@@ -40,7 +39,7 @@ export const POST = async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error(error);
-    return new Response("Failed to create a  new user", {
+    return new Response("Failed to create a new user", {
       status: 500,
     })
   }
