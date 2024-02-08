@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import AuthContext from "@/contexts/AuthContext";
+import Topbar from "@/components/Chats/Topbar";
+import cn from "@/utils/cn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, "bg-pink-100")}>
         <AuthContext>
+          <Topbar />
           {children}
         </AuthContext>
       </body>
