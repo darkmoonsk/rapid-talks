@@ -5,9 +5,13 @@ import Search from "../UI/Search/Search";
 import ChatBox from "./ChatBox";
 import IChat from "@/models/interfaces/IChat";
 import IUser from "@/models/interfaces/IUser";
-import Loader from "../UI/Loader";
+import Loader from "../UI/Loader/Loader";
 
-function ChatList() {
+interface ChatListProps {
+  currentChatId?: string | string[];
+}
+
+function ChatList({ currentChatId }: ChatListProps) {
   const { data: session } = useSession();
   const currentUser = session?.user as IUser;
 
@@ -24,6 +28,7 @@ function ChatList() {
           : `/api/users/${currentUser._id}`,
       );
       const data = await res.data;
+      console.log(data);
       setChats(data);
       setLoading(false);
     } catch (error) {
@@ -47,21 +52,23 @@ function ChatList() {
   }, [currentUser, search]);
 
   return (
-    <div className="h-screen flex flex-col gap-5 pb-20">
+    <div className="h-full flex flex-col gap-5">
       <Search
         placeholder="Buscar chat..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="flex-1 flex flex-col bg-white rounded-3xl py-4 px-3 overflow-y-scroll">
-          {chats?.map((chat: IChat, index) => (
-            <ChatBox chat={chat} key={index} currentUser={currentUser} />
-          ))}
-        </div>
-      )}
+        
+          <div className="flex-1 flex flex-col bg-white rounded-3xl py-4 px-3 no-scrollbar overflow-y-scroll">
+            {loading ? <Loader /> : (
+              <>
+                {chats?.map((chat: IChat, index) => (
+                  <ChatBox chat={chat} key={index} currentUser={currentUser} currentChatId={currentChatId || ""} />
+                ))}
+              </>
+            )}
+          </div>
+        
     </div>
   );
 }

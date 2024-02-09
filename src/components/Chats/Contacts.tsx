@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Loader from "../UI/Loader";
+import Loader from "../UI/Loader/Loader";
 import { RadioButtonChecked, RadioButtonUnchecked } from "@mui/icons-material";
 import Image from "next/image";
 import Button from "../UI/Button/Button";
@@ -87,7 +87,7 @@ function Contacts() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex h-full flex-col gap-5">
       <Search
         placeholder="Buscar contato..."
         value={search}
@@ -96,8 +96,8 @@ function Contacts() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex gap-7 items-start max-lg:flex-col">
-          <div className="h-screen w-1/2 max-lg:w-full flex flex-col gap-5 bg-white rounded-3xl py-5 px-8 mb-20">
+        <div className="flex gap-7 h-full items-start max-lg:flex-col">
+          <div className="w-1/2 h-full no-scrollbar overflow-y-scroll max-lg:w-full flex flex-col gap-5 bg-white rounded-3xl py-5 px-8">
             <p className="text-body-bold">Marque ou desmarque</p>
             {contacts?.map((contact: IUser, index) => (
               <div
