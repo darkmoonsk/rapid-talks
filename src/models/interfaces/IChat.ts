@@ -1,6 +1,7 @@
 import IUser from "./IUser";
 
 interface IChat {
+  _id: string;
   members: IUser[];
   messages: string[];
   isGroup: boolean;
