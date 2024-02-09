@@ -6,8 +6,9 @@ import Button from "@/components/UI/Button/Button";
 import { useForm } from "react-hook-form";
 import { CldUploadButton } from "next-cloudinary";
 import { useEffect, useState } from "react";
-import Loader from "@/components/UI/Loader";
+import Loader from "@/components/UI/Loader/Loader";
 import axios from "axios";
+import IUser from "@/models/interfaces/IUser";
 
 function ProfilePage() {
   const { data: session } = useSession();
