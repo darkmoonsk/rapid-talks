@@ -3,8 +3,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Search from "../UI/Search/Search";
 import ChatBox from "./ChatBox";
-import IChat from "@/models/IChat";
-import IUser from "@/models/IUser";
+import IChat from "@/models/interfaces/IChat";
+import IUser from "@/models/interfaces/IUser";
 import Loader from "../UI/Loader";
 
 function ChatList() {

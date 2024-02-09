@@ -1,6 +1,6 @@
 import Image from "next/image";
-import IChat from "@/models/IChat";
-import IUser from "@/models/IUser"
+import IChat from "@/models/interfaces/IChat";
+import IUser from "@/models/interfaces/IUser"
 import { format } from "date-fns";
 
 interface ChatBoxProps {

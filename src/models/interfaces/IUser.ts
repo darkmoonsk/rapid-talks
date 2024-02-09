@@ -6,3 +6,5 @@ interface IUser {
   _id: string;
   __v: number;
 }
+
+export default IUser;
