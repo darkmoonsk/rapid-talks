@@ -8,6 +8,7 @@ import Image from "next/image";
 import Button from "../UI/Button/Button";
 import Search from "../UI/Search/Search";
 import { useRouter } from "next/navigation";
+import IUser from "@/models/IUser";
 
 function Contacts() {
   const [loading, setLoading] = useState(true);
