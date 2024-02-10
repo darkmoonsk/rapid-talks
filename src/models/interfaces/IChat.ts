@@ -1,9 +1,10 @@
+import IMessage from "./IMessage";
 import IUser from "./IUser";
 
 interface IChat {
   _id: string;
   members: IUser[];
-  messages: string[];
+  messages: IMessage[];
   isGroup: boolean;
   name: string;
   groupPhoto: string;
