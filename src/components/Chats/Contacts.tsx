@@ -32,7 +32,6 @@ function Contacts() {
           (contact: IUser) => contact._id !== (currentUser as IUser)._id,
         ),
       );
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +86,7 @@ function Contacts() {
   };
 
   return (
-    <div className="flex h-full flex-col gap-5">
+    <div className="flex h-screen flex-col gap-5">
       <Search
         placeholder="Buscar contato..."
         value={search}
