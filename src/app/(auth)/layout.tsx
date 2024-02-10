@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "../globals.css";
 import ToasterContext from "@/contexts/ToasterContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins(
+  {
+    style: "normal",
+    weight: ["300", "400", "500", "600", "700", "800", "900"],
+    subsets: ["latin"]
+  }
+);
 
 export const metadata: Metadata = {
   title: "RapidTalks - Autenticação",
@@ -17,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-purple-1`}>
+      <body className={`${poppins.className} bg-purple-1`}>
         <div className="bg-sticker fixed w-full h-full z-[-1]"/>
         <ToasterContext />
         {children}

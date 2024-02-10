@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "../globals.css";
 import AuthContext from "@/contexts/AuthContext";
 import Topbar from "@/components/Chats/Topbar";
 import cn from "@/utils/cn";
+import MobileBar from "@/components/Chats/MobileBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins(
+  {
+    style: "normal",
+    weight: ["300", "400", "500", "600", "700", "800", "900"],
+    subsets: ["latin"]
+  }
+);
 
 export const metadata: Metadata = {
   title: "RapidTalks - Webchat",
@@ -19,10 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "bg-pink-100")}>
+      <body className={cn(poppins.className, "bg-pink-100")}>
         <AuthContext>
           <Topbar />
           {children}
+          <MobileBar />
         </AuthContext>
       </body>
     </html>
