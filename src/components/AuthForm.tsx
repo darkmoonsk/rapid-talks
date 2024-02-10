@@ -54,18 +54,28 @@ function AuthForm({ type }: AuthFormProps) {
     }
 
     if(type === "login") {
-      const response = await signIn("credentials", {
-        username: data.email, 
-        password: data.password,
-        redirect: false,
-      });
-      if(response?.ok) {
-        toast.success("Usuário logado com sucesso!");
-        router.push("/chats");
-      }
-
-      if(response?.error) {
-        toast.error("E-mail ou senha inválidos!");
+      if (type === "login") {
+        try {
+          const response = await signIn("credentials", {
+            username: data.email,
+            password: data.password,
+            redirect: false, // Evita redirecionamentos automáticos
+          });
+      
+          if (!response?.error) {
+            toast.success("Usuário logado com sucesso!");
+            router.push("/chats");
+          } else {
+            if (response.error === 'CredentialsSignin') {
+              toast.error("E-mail ou senha inválidos!");
+            } else {
+              toast.error("Erro ao tentar fazer login, tente novamente.");
+            }
+          }
+        } catch (error) {
+          console.error("Erro ao tentar fazer login:", error);
+          toast.error("Erro ao tentar fazer login. Por favor, tente novamente.");
+        }
       }
     }
 
