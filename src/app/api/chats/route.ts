@@ -1,4 +1,5 @@
 import { connectToDB } from "@/database";
+import { pusherServer } from "@/lib/pusher";
 import Chat from "@/models/Chat";
 import User from "@/models/User";
 
@@ -31,15 +32,21 @@ export async function POST(req: Request) {
       await chat.save();
 
       const updateAllMembers = chat.members.map(async (memberId: string) => {
-            await User.findByIdAndUpdate(memberId, {
-            $addToSet: { chats: chat._id }
-            },     
-            { new: true }
-          );
-        })
+          await User.findByIdAndUpdate(memberId, {
+          $addToSet: { chats: chat._id }
+          },     
+          { new: true }
+        );
+      })
 
-        Promise.all(updateAllMembers);
-      }
+      Promise.all(updateAllMembers);
+      
+      // Aciona um evento Pusher para cada membro notificando sobre o novo chat
+      chat.members.forEach((memberId: string) => {
+        pusherServer.trigger(memberId.toString(), "new-chat", chat);
+      });
+    }
+
 
     return new Response(JSON.stringify(chat), { status: 200 });
   } catch (error) {
