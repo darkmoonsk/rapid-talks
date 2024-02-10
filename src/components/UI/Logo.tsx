@@ -9,6 +9,7 @@ function Logo() {
         alt="logo" 
         width="120"
         height="120"
+        priority
       />
       <h3 className="text-h3-bold text-blue-950">
         RapidTalks
