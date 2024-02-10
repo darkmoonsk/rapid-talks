@@ -14,20 +14,20 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.username && !credentials?.password) {
-          throw new Error("Por favor digite o seu e-mail e senha");
+          throw new Error("EmailAndPasswordRequired");
         }
 
         await connectToDB();
         const user = await User.findOne({ email: credentials?.username });
 
         if (!user || !user?.password) {
-          throw new Error("Usuário não encontrado");
+          throw new Error("UserNotFound");
         }
 
         const isMatch = await compare(credentials.password, user.password);
 
         if (!isMatch) {
-          throw new Error("Email ou senha invalidos");
+          throw new Error("CredentialsSignin");
         }
 
         return user;
