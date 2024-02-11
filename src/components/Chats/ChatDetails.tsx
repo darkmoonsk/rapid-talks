@@ -11,7 +11,6 @@ import Loader from "../UI/Loader/Loader";
 import { CldUploadButton } from "next-cloudinary";
 import MessageBox from "../Message/MessageBox";
 import { pusherClient } from "@/lib/pusher";
-import IMessage from "@/models/interfaces/IMessage";
 
 function ChatDetails({ chatId }: any) {
   const { data: session } = useSession();
@@ -106,7 +105,7 @@ function ChatDetails({ chatId }: any) {
   
 
   return (
-    <div className="w-full h-full flex flex-col bg-white rounded-2xl">
+    <div className="w-full h-full flex flex-col bg-white rounded-2xl drop-shadow-lg">
       {loading ? <Loader /> : (
         <div className="flex items-center gap-4 px-8 py-3 text-body-bold">
           {chat?.isGroup ? (
@@ -144,7 +143,7 @@ function ChatDetails({ chatId }: any) {
       )}
       
       {/*  Messagens do chat  */}
-      <div className="flex-1 flex flex-col gap-5 bg-grey-2 p-5 no-scrollbar overflow-y-scroll">
+      <div className="flex-1 flex flex-col gap-5 bg-blue-1 bg-opacity-50 p-5 no-scrollbar overflow-y-scroll">
         {chat?.messages?.map((message, index) => (
           <MessageBox
             key={index}

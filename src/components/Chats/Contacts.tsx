@@ -86,7 +86,7 @@ function Contacts() {
   };
 
   return (
-    <div className="flex h-screen flex-col gap-5">
+    <div className="flex h-full drop-shadow-lg flex-col gap-5">
       <Search
         placeholder="Buscar contato..."
         value={search}

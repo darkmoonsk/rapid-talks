@@ -46,18 +46,18 @@ function ChatBox({ chat, currentUser, currentChatId }: ChatBoxProps) {
           <Image
             onClick={() => router.push(`/chats/${chat._id}/group-info`)}
             src={chat?.groupPhoto || "/images/group.png"}
-            width="72"
-            height="72"
+            width="48"
+            height="48"
             alt="Imagem do grupo"
-            className="w-[72px] h-[72px] z-[] rounded-full object-cover object-center"
+            className="w-[48px] h-[48px] z-[] rounded-full object-cover object-center"
           />
         ) : (
           <Image
             src={otherMembers[0].profileImageUrl || "/images/person.png"}
-            width="72"
-            height="72"
+            width="48"
+            height="48"
             alt="Imagem do contato"
-            className="w-[72px] h-[72px] rounded-full object-cover object-center"
+            className="w-[48px] h-[48px] rounded-full object-cover object-center"
           />
         )}
 

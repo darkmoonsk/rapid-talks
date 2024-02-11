@@ -88,7 +88,9 @@ function ChatList({ currentChatId }: ChatListProps) {
         onChange={(e) => setSearch(e.target.value)}
       />
         
-          <div className="flex-1 flex flex-col bg-white rounded-3xl py-4 px-3 no-scrollbar overflow-y-scroll">
+          <div className="flex-1 flex flex-col bg-white rounded-3xl py-4 px-3 
+            gap-2 no-scrollbar overflow-y-scroll drop-shadow-lg
+          ">
             {loading ? <Loader /> : (
               <>
                 {chats?.map((chat: IChat, index) => (
