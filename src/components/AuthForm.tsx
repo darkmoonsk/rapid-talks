@@ -1,7 +1,10 @@
 "use client";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import {
   EmailOutlined,
+  LockOpenOutlined,
   LockOutlined,
   PersonOutline,
 } from "@mui/icons-material";
@@ -10,7 +13,7 @@ import Logo from "./UI/Logo";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import LightTooltip from "./UI/LightTooltip/LightTooltip";
 
 interface AuthFormProps {
   type: "register" | "login";
@@ -22,7 +25,11 @@ interface Inputs {
   username: string;
 }
 
+type passwordInputType = "password" | "text";
+
 function AuthForm({ type }: AuthFormProps) {
+  const [passwordType, setPasswordType] = useState<passwordInputType>("password");
+
   const {
     register,
     handleSubmit,
@@ -78,11 +85,18 @@ function AuthForm({ type }: AuthFormProps) {
         }
       }
     }
-
   };
 
+  function togglePasswordVisibility() {
+    if (passwordType === "password") {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    } 
+  }
+
   return (
-    <div className="w-full h-lvh flex items-center justify-center">
+    <div className="w-full h-lvh drop-shadow-lg flex items-center justify-center">
       <div className="
         w-1/3 py-7 px-4 max-sm:w-5/6 max-lg:w-2/3 max-xl:w-1/2 
         flex flex-col items-center justify-center gap-6 bg-white rounded-3xl
@@ -133,7 +147,9 @@ function AuthForm({ type }: AuthFormProps) {
                 placeholder="E-mail"
                 className="input-field"
               />
-              <EmailOutlined sx={{ color: "#737373" }} />
+              <LightTooltip title="Escreva um email válido" placement="top" arrow>
+                <EmailOutlined sx={{ color: "#737373" }} />
+              </LightTooltip>
             </div>
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
@@ -161,11 +177,19 @@ function AuthForm({ type }: AuthFormProps) {
                       "A senha deve conter pelo menos uma letra maiúscula e minúscula, um número e um caractere especial!",
                   },
                 })}
-                type="password"
+                type={passwordType}
                 placeholder="Senha"
                 className="input-field"
               />
-              <LockOutlined sx={{ color: "#737373" }} />
+              {passwordType === "password" ? (
+                <LightTooltip title="Mostrar senha" placement="top" arrow>
+                  <LockOutlined className="animate-bounce delay-200" onClick={togglePasswordVisibility} sx={{ color: "#737373" }} />
+                </LightTooltip>
+              ) : (
+                <LightTooltip title="Mostrar senha" placement="top" arrow>
+                  <LockOpenOutlined onClick={togglePasswordVisibility} sx={{ color: "#737373" }} />
+                </LightTooltip>
+              )}
             </div>
             {errors.password && (
               <p className="text-red-500">{errors.password.message}</p>
@@ -177,7 +201,7 @@ function AuthForm({ type }: AuthFormProps) {
             className="
               w-full px-5 py-3 mt-5 mb-7 rounded-xl cursor-pointer bg-blue-1
               transition-all duration-300 ease-in-out
-              hover:bg-green-1 text-white text-body-bold
+              hover:bg-green-1 text-white text-body-bold drop-shadow-md
             ">
             {type === "register" ? "Cadastrar" : "Entrar"}
           </button>
