@@ -33,6 +33,28 @@
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;
   }
+
+  /* Estiliza a barra de rolagem para todos os elementos */
+* {
+  scrollbar-width: thin; /* "thin" para barras mais finas ou "auto" para o tamanho padrão */
+  scrollbar-color: pink #f0f0f0; /* Cor da barra de rolagem e do track */
+}
+
+/* Para navegadores baseados no WebKit (Chrome, Edge, Safari, etc.) */
+*::-webkit-scrollbar {
+  width: 12px; /* Largura da barra de rolagem */
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Cor de fundo da track da barra de rolagem */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: pink; /* Cor da barra de rolagem */
+  border-radius: 6px; /* Arredonda as bordas da barra de rolagem */
+  border: 3px solid #f0f0f0; /* Cria uma borda ao redor da barra de rolagem */
+}
+
 }
 
 
