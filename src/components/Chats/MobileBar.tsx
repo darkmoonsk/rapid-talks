@@ -1,48 +1,69 @@
-"use client"
+"use client";
 import cn from "@/utils/cn";
-import { Logout } from "@mui/icons-material";
+import {
+  Chat,
+  ContactPageOutlined,
+  Logout,
+  LogoutOutlined,
+} from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LogoutButton from "../UI/LogoutButton/LogoutButton";
+import { useEffect, useState } from "react";
 
 function MobileBar() {
   const pathname = usePathname();
-    const { data: session } = useSession();
-    const user = session?.user;
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  const { data: session } = useSession();
+  const user = session?.user;
 
-    const handleLogout = () => {
-      signOut({ callbackUrl: "/" });
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/" });
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window?.innerWidth);
     };
 
+    window.addEventListener("resize", handleResize);
+
+    // Limpeza ao desmontar o componente
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <nav className="bottom-0 bg-white sticky px-10 py-5 flex items-center justify-between sm:hidden">
+    <nav className="bottom-0 bg-white sticky px-5 py-3 flex items-center justify-between sm:hidden">
       <Link
         href="/chats"
         className={cn(
           pathname === "/chats" ? "text-red-1" : "",
-          "transition-all duration-200 ease-in-out hover:scale-105",
+          "flex gap-2 transition-all duration-200 ease-in-out hover:scale-105",
         )}>
         Chats
+        <Chat sx={{ color: "#535353" }} />
       </Link>
       <Link
         href="/contatos"
         className={cn(
           pathname === "/contatos" ? "text-red-1" : "",
-          "transition-all duration-200 ease-in-out hover:scale-105",
+          "flex gap-1 transition-all duration-200 ease-in-out hover:scale-105",
         )}>
         Contatos
+        <ContactPageOutlined sx={{ color: "#535353" }} />
       </Link>
+      {windowWidth > 480 ? (
+        <LogoutButton className="bg-green-1" onClick={handleLogout} />
+      ) : (
+        <button>
+          <LogoutOutlined sx={{ color: "#535353" }} />
+        </button>
+      )}
 
-      <button
-        onClick={handleLogout}
-        className="
-            border border-transparent p-2 hover:border hover:border-gray-400 hover:shadow-md rounded-full
-            transition-all duration-300 ease-in-out
-          ">
-        <Logout sx={{ color: "#535353" }} />
-      </button>
       <Link href="/perfil">
         <Image
           src={(user as any)?.profileImageUrl || "/images/person.png"}

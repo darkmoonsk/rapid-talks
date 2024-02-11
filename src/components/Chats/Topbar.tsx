@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import cn from "@/utils/cn";
 import Logo from "../UI/Logo";
-import { Logout } from "@mui/icons-material";
+import { Chat, ContactPageOutlined, Logout } from "@mui/icons-material";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import LogoutButton from "../UI/LogoutButton/LogoutButton";
 
 function Topbar() {
   const pathname = usePathname();
@@ -31,27 +32,22 @@ function Topbar() {
           href="/chats"
           className={cn(
             pathname === "/chats" ? "text-red-1" : "",
-            "transition-all duration-200 ease-in-out hover:scale-105",
+            "flex gap-2 transition-all duration-200 ease-in-out hover:scale-105",
           )}>
           Chats
+          <Chat sx={{color: "#535353"}} />
         </Link>
         <Link
           href="/contatos"
           className={cn(
             pathname === "/contatos" ? "text-red-1" : "",
-            "transition-all duration-200 ease-in-out hover:scale-105",
+            "flex gap-1 transition-all duration-200 ease-in-out hover:scale-105",
           )}>
           Contatos
+          <ContactPageOutlined sx={{color: "#535353"}} />
         </Link>
 
-        <button 
-          onClick={handleLogout} 
-          className="
-            border border-transparent p-2 hover:border hover:border-gray-400 hover:shadow-md rounded-full
-            transition-all duration-300 ease-in-out
-          ">
-          <Logout sx={{ color: "#535353" }} />
-        </button>
+        <LogoutButton className="bg-green-1" onClick={handleLogout} />
         <Link href="/perfil">
           <Image
             src={(user as any)?.profileImageUrl || "/images/person.png"}
