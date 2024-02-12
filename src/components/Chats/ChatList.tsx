@@ -25,10 +25,12 @@ function ChatList({ currentChatId }: ChatListProps) {
       setLoading(true);
       const res = await axios.get(
         search !== ""
-          ? `/api/users/${currentUser._id}/searchChat/${search}`
+          ? `/api/users/${currentUser._id}/search-chat/${search.trim()}`
           : `/api/users/${currentUser._id}`,
       );
-      const data = await res.data;
+
+      const data = res.data;
+      
       setChats(data);
       setLoading(false);
     } catch (error) {

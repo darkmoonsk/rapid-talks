@@ -48,6 +48,10 @@ function ChatDetails({ chatId }: any) {
   }, [currentUser]);
 
   const sendText = async () => {
+    if (text.trim() === "") {
+      return;
+    }
+
     try {
       const res = await axios.post("/api/messages", {
         chatId,
@@ -104,9 +108,8 @@ function ChatDetails({ chatId }: any) {
   }, [chat?.messages])
   
 
-  return (
+  return loading ? <Loader /> : (
     <div className="w-full h-full flex flex-col bg-white rounded-2xl drop-shadow-lg">
-      {loading ? <Loader /> : (
         <div className="flex items-center gap-4 px-8 py-3 text-body-bold">
           {chat?.isGroup ? (
             <>
@@ -140,10 +143,10 @@ function ChatDetails({ chatId }: any) {
             </>
           )}
         </div>
-      )}
+      
       
       {/*  Messagens do chat  */}
-      <div className="flex-1 flex flex-col gap-5 bg-blue-1 bg-opacity-50 p-5 no-scrollbar overflow-y-scroll">
+      <div className="flex-1 flex flex-col gap-5 bg-blue-1 bg-opacity-50 p-5 no-scrollbar overflow-y-scroll min-h-scree">
         {chat?.messages?.map((message, index) => (
           <MessageBox
             key={index}
@@ -176,7 +179,7 @@ function ChatDetails({ chatId }: any) {
             placeholder="Digite uma mensagem"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full p-2 bg-transparent outline-none border-none text-body-bold"
+            className="w-full placeholder:text-sm-bold p-2 bg-transparent outline-none border-none text-body-bold"
           />
         </div>
         <div>
@@ -193,7 +196,7 @@ function ChatDetails({ chatId }: any) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default ChatDetails;
