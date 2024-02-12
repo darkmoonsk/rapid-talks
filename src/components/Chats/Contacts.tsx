@@ -23,7 +23,7 @@ function Contacts() {
     setLoading(true);
     try {
       const res = await axios.get(
-        search !== "" ? `/api/users/searchContact/${search}` : "/api/users",
+        search !== "" ? `/api/users/search-contact/${search}` : "/api/users",
       );
       const data = await res.data;
 

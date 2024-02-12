@@ -2,9 +2,9 @@ import { connectToDB } from "@/database";
 import Chat  from "@/models/Chat";
 import Message from "@/models/Message";
 import User from "@/models/User";
-import type { NextApiRequest } from "next";
+import type { NextRequest } from "next/server";
 
-export async function GET (req: NextApiRequest, { params }: any) {
+export async function GET (req: NextRequest, { params }: any) {
   try {
     await connectToDB();
 
