@@ -16,6 +16,7 @@ export async function POST(req: Request) {
       members: [currentUserId, ...members],
       groupPhoto
     } : {
+      name, 
       members: {
         $all: [currentUserId, ...members],
         $size: 2
@@ -26,7 +27,7 @@ export async function POST(req: Request) {
 
     if (!chat) {
       chat = await new Chat(
-        isGroup ? query : { members: [currentUserId, ...members]}
+        isGroup ? query : {name, members: [currentUserId, ...members]}
       );
 
       await chat.save();
