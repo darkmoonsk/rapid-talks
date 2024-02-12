@@ -65,23 +65,34 @@ function Contacts() {
   };
 
   // Criando um novo chat
-  const [name, setName] = useState("");
+  const [chatName, setChatName] = useState("");
+
+  useEffect(() => {
+    if (selectedContacts.length === 1) {
+      setChatName(selectedContacts[0].username);
+    } else {
+      setChatName("");
+    }
+  }, [selectedContacts]);
 
   const createChat = async () => {
+    setLoading(true);
     try {
-      const res = await axios.post("/api/chats", {
+      const res = await axios.post("/api/chats/", {
         currentUserId: currentUser?._id,
         members: selectedContacts.map((contact: IUser) => contact._id),
         isGroup,
-        name,
+        name: chatName,
       });
   
       if(res.status === 200) {
         const chat =  res.data;
         router.push(`/chats/${chat._id}`);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -127,9 +138,9 @@ function Contacts() {
                   <input
                     placeholder="Digite o nome do grupo..."
                     className="bg-white rounded-2xl px-5 py-3 outline-none"
-                    value={name}
+                    value={chatName}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setName(e.target.value)
+                      setChatName(e.target.value)
                     }
                   />
                 </div>
