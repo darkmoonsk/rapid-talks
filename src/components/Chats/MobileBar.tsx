@@ -60,7 +60,7 @@ function MobileBar() {
         <LogoutButton className="bg-green-1" onClick={handleLogout} />
       ) : (
         <button>
-          <LogoutOutlined sx={{ color: "#535353" }} />
+          <LogoutOutlined className="transition-all duration-200 ease-in-out hover:scale-110" sx={{ color: "#535353" }} />
         </button>
       )}
 
