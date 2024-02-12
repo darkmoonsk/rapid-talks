@@ -12,15 +12,17 @@ function MessageBox({ message, currentUser }: MessageBoxProps) {
   const messageDate = new Date(message?.createdAt);
 
   return message?.sender?._id !== currentUser._id ? (
-    <div className="flex gap-3 items-start">
-      <Image
-        src={message?.sender?.profileImageUrl || "/images/person.png"}
-        alt="Imagem de perfil"
-        width={40}
-        height={40}
-        className="w-auto h-auto rounded-full object-cover object-center"
-      />
-      <div className="flex flex-col gap-2">
+    <div className="flex items-start justify-center">
+      <div className="p-2">
+        <Image
+          src={message?.sender?.profileImageUrl || "/images/person.png"}
+          alt="Imagem de perfil"
+          width={48}
+          height={48}
+          className="w-[48px] h-[48px] rounded-full object-cover object-center"
+        />
+      </div>
+      <div className="flex w-full flex-col gap-2">
         <p className="text-small-bold">
           {message?.sender?.username} &#160; &#183; &#160;{" "}
           {format(messageDate, "HH:mm")}
@@ -34,9 +36,9 @@ function MessageBox({ message, currentUser }: MessageBoxProps) {
           <Image
             src={message.photo}
             alt="Imagem"
-            width={200}
-            height={200}
-            className="w-auto h-auto"
+            width={240}
+            height={135}
+            className="w-auto h-auto rounded-md object-cover object-center"
           />
         )}
       </div>
@@ -56,9 +58,9 @@ function MessageBox({ message, currentUser }: MessageBoxProps) {
           <Image
             src={message?.photo}
             alt="Imagem"
-            width={200}
-            height={200}
-            className="rounded-md"
+            width={240}
+            height={135}
+            className="w-auto h-auto rounded-md object-cover object-center"
           />
         )}
       </div>
