@@ -83,6 +83,7 @@ function AuthForm({ type }: AuthFormProps) {
           } else {
             toast.error("Erro ao tentar fazer login, tente novamente.");
           }
+          setLoading(false);
         }
 
       } catch (error) {
