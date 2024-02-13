@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -29,7 +29,8 @@ interface Inputs {
 type passwordInputType = "password" | "text";
 
 function AuthForm({ type }: AuthFormProps) {
-  const [passwordType, setPasswordType] = useState<passwordInputType>("password");
+  const [passwordType, setPasswordType] =
+    useState<passwordInputType>("password");
   const [loading, setLoading] = useState(false);
 
   const {
@@ -43,51 +44,51 @@ function AuthForm({ type }: AuthFormProps) {
 
   const onSubmit = async (data: Inputs) => {
     setLoading(true);
-    if(type === "register") {
+    if (type === "register") {
       const response = await axios.post("/api/auth/register", {
         username: data.username,
         email: data.email,
         password: data.password,
-      })
-      if(response.status === 201) {
+      });
+      if (response.status === 201) {
         toast.success("Usuário cadastrado com sucesso!");
         router.push("/");
       }
 
-      if(response.status === 409) {
+      if (response.status === 409) {
         toast.error("Usuário já cadastrado!");
       }
-      
-      if(response.status === 500 || response.status === 400) {
+
+      if (response.status === 500 || response.status === 400) {
         toast.error("Erro ao cadastrar usuário! tente outra vez mais tarde.");
       }
 
       setLoading(false);
     }
 
-    if(type === "login") {
-      if (type === "login") {
-        try {
-          const response = await signIn("credentials", {
-            username: data.email,
-            password: data.password,
-            redirect: false, // Evita redirecionamentos automáticos
-          });
-      
-          if (!response?.error) {
-            toast.success("Usuário logado com sucesso!");
-            router.push("/chats");
+    if (type === "login") {
+      try {
+        const response = await signIn("credentials", {
+          username: data.email,
+          password: data.password,
+          redirect: false, // Evita redirecionamentos automáticos
+        });
+
+        if (!response?.error) {
+          toast.success("Usuário logado com sucesso!");
+          router.push("/chats");
+        } else {
+          if (response.error === "CredentialsSignin") {
+            toast.error("E-mail ou senha inválidos!");
           } else {
-            if (response.error === 'CredentialsSignin') {
-              toast.error("E-mail ou senha inválidos!");
-            } else {
-              toast.error("Erro ao tentar fazer login, tente novamente.");
-            }
+            toast.error("Erro ao tentar fazer login, tente novamente.");
           }
-        } catch (error) {
-          console.error("Erro ao tentar fazer login:", error);
-          toast.error("Erro ao tentar fazer login. Por favor, tente novamente.");
         }
+
+      } catch (error) {
+        console.error("Erro ao tentar fazer login:", error);
+        toast.error("Erro ao tentar fazer login. Por favor, tente novamente.");
+        setLoading(false);
       }
     }
   };
@@ -97,21 +98,24 @@ function AuthForm({ type }: AuthFormProps) {
       setPasswordType("text");
     } else {
       setPasswordType("password");
-    } 
+    }
   }
 
   return (
     <div className="w-full h-lvh drop-shadow-lg flex items-center justify-center">
-      <div className="
-        w-1/3 py-7 px-4 max-sm:w-5/6 max-lg:w-2/3 max-xl:w-1/2 max-h-[480px]
-        flex flex-col items-center justify-center gap-6 bg-white rounded-3xl
+      <div
+        className="
+        w-1/3 py-7 px-4 max-sm:w-5/6 max-lg:w-2/3 max-xl:w-1/2 max-h-[520px]
+        flex flex-col items-center justify-center gap-2  bg-white rounded-3xl
       ">
         {loading ? (
-        <Loader />
+          <Loader />
         ) : (
           <>
             <Logo />
-            <form className="flex flex-col items-center gap-5" onSubmit={handleSubmit(onSubmit)}> 
+            <form
+              className="flex flex-col items-center gap-5"
+              onSubmit={handleSubmit(onSubmit)}>
               {type === "register" && (
                 <>
                   <div className="input">
@@ -156,7 +160,10 @@ function AuthForm({ type }: AuthFormProps) {
                     placeholder="E-mail"
                     className="input-field"
                   />
-                  <LightTooltip title="Escreva um email válido" placement="top" arrow>
+                  <LightTooltip
+                    title="Escreva um email válido"
+                    placement="top"
+                    arrow>
                     <EmailOutlined sx={{ color: "#737373" }} />
                   </LightTooltip>
                 </div>
@@ -192,11 +199,18 @@ function AuthForm({ type }: AuthFormProps) {
                   />
                   {passwordType === "password" ? (
                     <LightTooltip title="Mostrar senha" placement="top" arrow>
-                      <LockOutlined className="animate-bounce delay-200" onClick={togglePasswordVisibility} sx={{ color: "#737373" }} />
+                      <LockOutlined
+                        className="animate-bounce delay-200"
+                        onClick={togglePasswordVisibility}
+                        sx={{ color: "#737373" }}
+                      />
                     </LightTooltip>
                   ) : (
                     <LightTooltip title="Mostrar senha" placement="top" arrow>
-                      <LockOpenOutlined onClick={togglePasswordVisibility} sx={{ color: "#737373" }} />
+                      <LockOpenOutlined
+                        onClick={togglePasswordVisibility}
+                        sx={{ color: "#737373" }}
+                      />
                     </LightTooltip>
                   )}
                 </div>
@@ -205,8 +219,8 @@ function AuthForm({ type }: AuthFormProps) {
                 )}
               </>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="
                   w-full px-5 py-3 mt-5 mb-7 rounded-xl cursor-pointer bg-blue-1
                   transition-all duration-300 ease-in-out
@@ -217,11 +231,15 @@ function AuthForm({ type }: AuthFormProps) {
 
               {type === "register" ? (
                 <p>
-                  <Link className="link" href="/">Já tem uma conta? Entrar</Link>
+                  <Link className="link" href="/">
+                    Já tem uma conta? Entrar
+                  </Link>
                 </p>
               ) : (
                 <p>
-                  <Link className="link" href="/register">Não tem uma conta? Cadastrar</Link>
+                  <Link className="link" href="/register">
+                    Não tem uma conta? Cadastrar
+                  </Link>
                 </p>
               )}
             </form>
