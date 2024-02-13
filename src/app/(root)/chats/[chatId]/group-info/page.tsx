@@ -78,7 +78,7 @@ function GroupInfoPage() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="mt-16 pb-8 flex flex-col gap-11 items-center justify-center">
+    <div className="h-screen max-h-[700px] mt-16 pb-8 flex flex-col gap-11 items-center justify-center">
       <h1 className="text-h3-bold">Edite as informações do Grupo</h1>
 
       <form className="flex flex-col gap-10 mx-2" onSubmit={handleSubmit(updateGroupChat)}>
