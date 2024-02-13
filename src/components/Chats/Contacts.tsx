@@ -111,7 +111,7 @@ function Contacts() {
         <Loader />
       ) : (
         <div className="flex gap-7 h-full items-start max-lg:flex-col">
-          <div className="w-1/2 h-full no-scrollbar overflow-y-scroll max-lg:w-full flex flex-col gap-5 bg-white rounded-3xl py-5 px-8">
+          <div className="w-1/2 h-full max-h-[615px] no-scrollbar overflow-y-scroll max-lg:w-full flex flex-col gap-5 bg-white rounded-3xl py-5 px-8">
             <p className="text-body-bold">Marque ou desmarque</p>
             {contacts?.map((contact: IUser, index) => (
               <div
