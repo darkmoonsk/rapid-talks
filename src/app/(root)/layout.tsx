@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../globals.css";
 import AuthContext from "@/contexts/AuthContext";
-import Topbar from "@/components/Chats/Topbar";
+import Topbar from "@/components/UI/Topbar";
 import cn from "@/utils/cn";
-import MobileBar from "@/components/Chats/MobileBar";
+import MobileBar from "@/components/UI/MobileBar";
 
 const poppins = Poppins(
   {
