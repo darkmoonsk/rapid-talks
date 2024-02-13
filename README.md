@@ -1,11 +1,13 @@
 # Rapid Talks
 
+![rapid-talks](https://github.com/darkmoonsk/rapid-talks/assets/101902194/844b5430-e417-47ae-abcd-82be3224c34d)
+
 ## Visão Geral
-**Rapid Talks** é uma POC (proof of concept) de uma aplicação de chat dinâmica, interativa desenvolvida com o objetivo de realizar a comunicação em tempo real. Utilizando uma combinação de tecnologias modernas e práticas de desenvolvimento avançadas, oferecendo uma experiência de usuário suave e responsiva.
+**Rapid Talks** é uma POC (proof of concept) de uma aplicação de chat dinâmica, interativa desenvolvida com o objetivo de realizar a comunicação em tempo real. Utilizando uma combinação de tecnologias modernas e práticas de desenvolvimento avançadas.
 
 O projeto é estruturado de maneira modular e escalável, com uma clara separação entre lógica de aplicação, componentes de interface do usuário, gestão de estado, e acesso a dados. Esta organização facilita a manutenção e contribuição para o projeto, além de proporcionar uma base sólida para futuras expansões e funcionalidades.
 
-Cada componente e módulo é construído com foco na reusabilidade e na separação de responsabilidades, seguindo as melhores práticas de desenvolvimento web moderno. O projeto oferece uma experiência de usuário fluida e responsiva, adequada para a rápida troca de mensagens em tempo real.
+Cada componente e módulo é construído com foco na reusabilidade, acessibilidade e em dar feedback visual ao usuario, seguindo as melhores práticas de desenvolvimento web moderno. O projeto oferece uma experiência de usuário fluida e responsiva, adequada para a rápida troca de mensagens em tempo real.
 
 ## Características Principais
 
@@ -18,7 +20,23 @@ Cada componente e módulo é construído com foco na reusabilidade e na separaç
 - **Pesquisa e Adição de Contatos**: Encontre e conecte-se com outros usuários facilmente, expandindo sua rede de contatos.
 - **Interface Responsiva**: Desfrute de uma experiência de usuário consistente em dispositivos móveis e desktops, graças a uma interface adaptável.
 
-## Como Começar
+## Como testar online 
+1. [clique aqui](https://rapidtalks.brunosouzadev.com/) para ir ao site
+2. Abra uma aba anonima do navegador para logar na segunda conta ou use outro perfil do navegador
+3. Logue usando as seguintes contas abaixo ou crie duas contas:
+```
+testuser1@test.com
+Test@123
+
+testuser2@test.com
+Test@123
+```
+4. Busque pelo nome do usuario que você quer iniciar o chat, o usuario 1 se chama HAL 9000 e o usuario 2 se chama Cortana, selecione o contato e clique em começar um novo chat.
+5. Teste enviando mensagens em cada usuário e veja o chat acontecendo em tempo real.
+
+## Como Começar localmente
+
+### É necessario ter o docker instalado para rodar o projeto localmente!
 
 1. Clone o repositório:
    ```
@@ -32,9 +50,9 @@ Cada componente e módulo é construído com foco na reusabilidade e na separaç
    ```
    npm install
    ```
-4. Inicie o servidor de desenvolvimento:
+4. Inicie o servidor de desenvolvimento local:
    ```
-   npm run dev
+   npm run dev:local
    ```
 5. Abra seu navegador e acesse `http://localhost:3000` para ver a aplicação em ação.
 
@@ -75,7 +93,7 @@ Contém o código específico da aplicação, estruturado de acordo com as funci
 ##### `components/`
 Armazena os componentes React reutilizáveis divididos por funcionalidade:
 - **`AuthForm.tsx`**: Componente de formulário utilizado para login e registro de usuários.
-- **`Chats/`**: Diretório contendo componentes relacionados às funcionalidades de chat, como a caixa de chat (`ChatBox.tsx`), lista de chats (`ChatList.tsx`), e barra superior (`Topbar.tsx`).
+- **`Chats/`**: Diretório contendo componentes relacionados às funcionalidades de chat, como a caixa de chat (`ChatBox.tsx`), lista de chats (`ChatList.tsx`).
 - **`UI/`**: Componentes de interface do usuário, como botões, loaders, campos de pesquisa, etc., que podem ser reutilizados em diferentes partes da aplicação.
 
 ##### `contexts/`
