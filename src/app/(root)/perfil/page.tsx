@@ -62,7 +62,7 @@ function ProfilePage() {
   return loading ? (
     <Loader />
   ) : (
-    <div className="mt-16 flex flex-col gap-11 items-center justify-center">
+    <div className="mt-16 pb-8 flex flex-col gap-11 items-center justify-center">
       <h1 className="text-h3-bold">Edite o seu perfil</h1>
 
       <form className="flex flex-col gap-10 mx-2" onSubmit={handleSubmit(updateUser)}>

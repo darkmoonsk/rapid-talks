@@ -27,7 +27,7 @@ function Topbar() {
       <Link href="/chats">
         <Logo />
       </Link>
-      <nav className="flex items-center gap-8 px-2 max-sm:hidden font-semibold">
+      <nav className="flex items-center gap-8 px-2 max-md:hidden font-semibold">
         <Link
           href="/chats"
           className={cn(

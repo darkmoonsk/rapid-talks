@@ -37,7 +37,7 @@ function MobileBar() {
   }, []);
 
   return (
-    <nav className="bottom-0 bg-white sticky px-5 py-3 flex items-center justify-between sm:hidden">
+    <nav className="bottom-0 bg-white sticky px-5 py-3 flex items-center justify-between md:hidden">
       <Link
         href="/chats"
         className={cn(
