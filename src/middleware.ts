@@ -10,6 +10,6 @@ export const config = {
   matcher: [
     "/chats/:path*",
     "/contatos/:path*",
-    "/profile/:path*",
+    "/perfil/:path*",
   ]
 }
