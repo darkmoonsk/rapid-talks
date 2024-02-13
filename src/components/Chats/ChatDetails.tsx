@@ -179,7 +179,8 @@ function ChatDetails({ chatId }: any) {
             placeholder="Digite uma mensagem"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full placeholder:text-sm-bold p-2 bg-transparent outline-none border-none text-body-bold"
+            onKeyUp={(e) => e.key === "Enter" && sendText()}
+            className="w-full placeholder:text-sm-bold p-2 bg-transparent outline-none border-none text-sm-bold"
           />
         </div>
         <div>

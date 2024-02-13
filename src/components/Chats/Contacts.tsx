@@ -56,10 +56,14 @@ function Contacts() {
   const isGroup = selectedContacts.length > 1;
 
   const handleSelect = (contact: IUser) => {
-    // Verifica se o contato já está selecionado
-    if (selectedContacts.includes(contact)) {
-      setSelectedContacts((prev) => prev.filter((c) => c !== contact));
+    // Encontra o índice do contato na lista de selecionados
+    const isContactSelected = selectedContacts.find((c) => c._id === contact._id);
+  
+    if (isContactSelected) {
+      // Se o contato já está selecionado, remova-o
+      setSelectedContacts((prev) => prev.filter((c, i) => c._id !== contact._id));
     } else {
+      // Se o contato não está selecionado, adicione-o
       setSelectedContacts((prev) => [...prev, contact]);
     }
   };
@@ -114,7 +118,7 @@ function Contacts() {
                 key={index}
                 className="flex gap-3 items-center cursor-pointer"
                 onClick={() => handleSelect(contact)}>
-                {selectedContacts.includes(contact) ? (
+                {selectedContacts.find((c) => c._id === contact._id ) ? (
                   <RadioButtonChecked sx={{ color: "pink" }} />
                 ) : (
                   <RadioButtonUnchecked />
