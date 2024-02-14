@@ -19,6 +19,14 @@ Cada componente e módulo é construído com foco na reusabilidade, acessibilida
 - **Customização de Grupo**: Personalize seu grupo com uma imagem, nome de usuário.
 - **Pesquisa e Adição de Contatos**: Encontre e conecte-se com outros usuários facilmente, expandindo sua rede de contatos.
 - **Interface Responsiva**: Desfrute de uma experiência de usuário consistente em dispositivos móveis e desktops, graças a uma interface adaptável.
+- **Assistante de IA em chats individuais**: Digite /chat-ai seguido da sua mensagem e finalize com /end para obter suporte do assistente na elaboração de suas mensagens para contatos específicos. Por exemplo: 
+```
+/chat-ai Escreva uma mensagem romantica /end
+
+// Resposta
+// Por padrão ele usará o nome do destinatario no texto
+Olá Mi Young, estou pensando em você a toda hora.
+```
 
 ## Como testar online 
 1. [clique aqui](https://rapidtalks.brunosouzadev.com/) para ir ao site
