@@ -2,6 +2,7 @@ import IMessage from "@/models/interfaces/IMessage";
 import IUser from "@/models/interfaces/IUser";
 import { format, isValid } from "date-fns";
 import Image from "next/image";
+import ModalImage from "../UI/ModalImage";
 
 interface MessageBoxProps {
   message: IMessage;
@@ -33,13 +34,7 @@ function MessageBox({ message, currentUser }: MessageBoxProps) {
             {message?.text}
           </p>
         ) : (
-          <Image
-            src={message.photo}
-            alt="Imagem"
-            width={240}
-            height={135}
-            className="w-auto h-auto rounded-md object-cover object-center"
-          />
+          <ModalImage imageSrc={message?.photo} />
         )}
       </div>
     </div>
@@ -55,13 +50,7 @@ function MessageBox({ message, currentUser }: MessageBoxProps) {
             {message?.text}
           </p>
         ) : (
-          <Image
-            src={message?.photo}
-            alt="Imagem"
-            width={240}
-            height={135}
-            className="w-auto h-auto rounded-md object-cover object-center"
-          />
+          <ModalImage imageSrc={message?.photo} />
         )}
       </div>
     </div>
