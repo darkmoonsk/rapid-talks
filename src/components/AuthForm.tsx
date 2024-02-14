@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import LightTooltip from "./UI/LightTooltip/LightTooltip";
 import Loader from "./UI/Loader/Loader";
+import cn from "@/utils/cn";
 
 interface AuthFormProps {
   type: "register" | "login";
@@ -105,10 +106,10 @@ function AuthForm({ type }: AuthFormProps) {
   return (
     <div className="w-full h-lvh drop-shadow-lg flex items-center justify-center">
       <div
-        className="
-        w-1/3 py-7 px-4 max-sm:w-5/6 max-lg:w-2/3 max-xl:w-1/2 max-h-[520px]
+        className={cn(`
+        w-1/3 py-7 px-4 max-sm:w-5/6 max-lg:w-2/3 max-xl:w-1/2 
         flex flex-col items-center justify-center gap-2  bg-white rounded-3xl
-      ">
+        `, loading ? "max-h-[520px]" : "")}>
         {loading ? (
           <Loader />
         ) : (
