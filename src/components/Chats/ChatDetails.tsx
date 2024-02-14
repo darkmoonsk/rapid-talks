@@ -6,11 +6,12 @@ import { useSession } from "next-auth/react";
 import IChat from "@/models/interfaces/IChat";
 import Link from "next/link";
 import Image from "next/image";
-import { AddPhotoAlternate } from "@mui/icons-material";
+import { AddPhotoAlternate, Assistant } from "@mui/icons-material";
 import Loader from "../UI/Loader/Loader";
 import { CldUploadButton } from "next-cloudinary";
 import MessageBox from "../Message/MessageBox";
 import { pusherClient } from "@/lib/pusher";
+import LightTooltip from "../UI/LightTooltip/LightTooltip";
 
 function ChatDetails({ chatId }: any) {
   const { data: session } = useSession();
@@ -20,6 +21,7 @@ function ChatDetails({ chatId }: any) {
   const [chat, setChat] = useState({} as IChat);
   const [otherMembers, setOtherMembers] = useState<IUser[]>();
   const [text, setText] = useState("");
+  const [isAwaitAssistant, setIsAwaitAssistant] = useState(false);
 
   const getChatDetails = async () => {
     try {
@@ -28,9 +30,11 @@ function ChatDetails({ chatId }: any) {
       const data = res.data;
       setChat(data);
 
-      const members  =  data?.members?.filter((member: IUser) => member._id !== currentUser._id);
+      const members = data?.members?.filter(
+        (member: IUser) => member._id !== currentUser._id,
+      );
       setOtherMembers((prevMembers) => members);
-      
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -38,14 +42,42 @@ function ChatDetails({ chatId }: any) {
     }
   };
 
+  const handleAiAssistance = async () => {
+    try {
+      const regex = /^\/chat-ai.*\/end$/;
+  
+      if (regex.test(text.trim()) && !chat.isGroup) {
+        setIsAwaitAssistant(true);
+        const targetUser = otherMembers?.[0].username;
+        const message = text.replace("/chat-ai", "").replace("/end", "").trim();
+  
+        const response = await axios.post("/api/ai", { message, targetUser });
+  
+        setIsAwaitAssistant(false);
+        setText(response.data);
+      }
+    } catch (error) {
+      setIsAwaitAssistant(false);
+      setText("Erro ao tentar obter resposta do assistente de IA :(");
+    }
+  };
+
   useEffect(() => {
     if (currentUser) {
       getChatDetails();
-      
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleAiAssistance();
+    }, 500);
+
+    return () => clearTimeout(timer);
+
+  }, [text]);
 
   const sendText = async () => {
     if (text.trim() === "") {
@@ -59,7 +91,7 @@ function ChatDetails({ chatId }: any) {
         text,
       });
 
-      if(res.status === 201) {
+      if (res.status === 201) {
         setText("");
       }
     } catch (error) {
@@ -74,7 +106,6 @@ function ChatDetails({ chatId }: any) {
         currentUserId: currentUser._id,
         photo: result?.info?.secure_url,
       });
-      
     } catch (error) {
       console.error(error);
     }
@@ -93,7 +124,7 @@ function ChatDetails({ chatId }: any) {
     };
 
     pusherClient.bind("new-message", handleMessage);
-    
+
     return () => {
       pusherClient.unsubscribe(chatId);
       pusherClient.unbind("new-message", handleMessage);
@@ -105,56 +136,53 @@ function ChatDetails({ chatId }: any) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat?.messages])
-  
+  }, [chat?.messages]);
 
-  return loading ? <Loader /> : (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="w-full h-full flex flex-col bg-white rounded-2xl drop-shadow-lg">
-        <div className="flex items-center gap-4 px-8 py-3 text-body-bold">
-          {chat?.isGroup ? (
-            <>
-              <Link href={`/chats/${chatId}/group-info`}>
-                <Image
-                  src={chat?.groupPhoto || "/images/group.png"}
-                  alt="Foto do grupo"
-                  width="72"
-                  height="72"
-                  className="w-[72px] h-[72px] rounded-full object-cover object-center"
-                />
-              </Link>
-              <div className="">
-                <p>
-                  {chat?.name} &#160; &#183; &#160; {chat?.members?.length}{" "} membros
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
+      <div className="flex items-center gap-4 px-8 py-3 text-body-bold">
+        {chat?.isGroup ? (
+          <>
+            <Link href={`/chats/${chatId}/group-info`}>
               <Image
-                src={otherMembers?.[0].profileImageUrl || "/images/person.png"}
-                alt="Foto do contato"
+                src={chat?.groupPhoto || "/images/group.png"}
+                alt="Foto do grupo"
                 width="72"
                 height="72"
                 className="w-[72px] h-[72px] rounded-full object-cover object-center"
               />
-              <div className="">
-                <p>{otherMembers?.[0].username}</p>
-              </div>
-            </>
-          )}
-        </div>
-      
-      
+            </Link>
+            <div className="">
+              <p>
+                {chat?.name} &#160; &#183; &#160; {chat?.members?.length}{" "}
+                membros
+              </p>
+            </div>
+          </>
+        ) : (
+          <>
+            <Image
+              src={otherMembers?.[0].profileImageUrl || "/images/person.png"}
+              alt="Foto do contato"
+              width="72"
+              height="72"
+              className="w-[72px] h-[72px] rounded-full object-cover object-center"
+            />
+            <div className="">
+              <p>{otherMembers?.[0].username}</p>
+            </div>
+          </>
+        )}
+      </div>
+
       {/*  Messagens do chat  */}
       <div className="flex-1 flex flex-col gap-5 bg-blue-1 bg-opacity-50 p-5 no-scrollbar overflow-y-scroll min-h-scree">
         {chat?.messages?.map((message, index) => (
-          <MessageBox
-            key={index}
-            message={message}
-            currentUser={currentUser}
-          />
+          <MessageBox key={index} message={message} currentUser={currentUser} />
         ))}
-        
+
         <div ref={bottomRef} />
       </div>
 
@@ -163,8 +191,7 @@ function ChatDetails({ chatId }: any) {
           <CldUploadButton
             options={{ maxFiles: 1 }}
             onUpload={sendPhoto}
-            uploadPreset="lkrqrnff"
-          >
+            uploadPreset="lkrqrnff">
             <AddPhotoAlternate
               sx={{
                 fontSize: "35px",
@@ -174,17 +201,31 @@ function ChatDetails({ chatId }: any) {
               }}
             />
           </CldUploadButton>
+          {isAwaitAssistant ? (
+            <div className="w-full placeholder:text-sm-bold p-2 bg-transparent border-none text-sm-bold">
+              Esperando resposta do assistente...
+            </div>
+          ) : (
           <input
             type="text"
-            placeholder="Digite uma mensagem"
+            placeholder={chat.isGroup ? "Digite uma mensagem" : "Digite uma mensagem ou peça ajuda ao assistente de IA"}
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyUp={(e) => e.key === "Enter" && sendText()}
             className="w-full placeholder:text-sm-bold p-2 bg-transparent outline-none border-none text-sm-bold"
           />
+          )}
         </div>
-        <div>
-          <Image 
+        <div className="flex items-center gap-2">
+          {!chat.isGroup && (
+            <LightTooltip title="Para pedir ajuda ao assistante de IA digite o seguinte: /chat-ai sua mensagem aqui /end" placement="top">
+              <Assistant 
+                className="animate-bounce delay-200"
+                sx={{ fontSize: "35px", color: "#ac0eb1"}}
+              />
+            </LightTooltip>
+          )}
+          <Image
             onClick={sendText}
             src="/images/send.jpg"
             alt="Enviar mensagem"
@@ -197,7 +238,7 @@ function ChatDetails({ chatId }: any) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default ChatDetails;
