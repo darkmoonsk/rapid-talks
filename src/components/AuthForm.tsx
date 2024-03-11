@@ -39,7 +39,9 @@ function AuthForm({ type }: AuthFormProps) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    mode: "onChange",
+  });
 
   const router = useRouter();
 
